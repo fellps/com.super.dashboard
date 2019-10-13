@@ -114,7 +114,7 @@ export default function Sales ({ history }) {
           filters={[
             { name: 'Event' },
             { name: 'EventType', label: 'Tipo de Evento' },
-            { name: 'CPF', label: 'CPF' },
+            { name: 'CPF', label: 'CPF' }
             // { name: 'Date', label: 'Data de Compra' }
           ]}
           title='Vendas'

@@ -39,7 +39,7 @@ const columns = [
           variant='primary'
         >Cardápios</Button>
         <Button
-          to={`/events/pos/${_id}`}
+          to={`/events/${_id}/pos`}
           size='sm'
           variant='primary'
         >Pontos de venda</Button>

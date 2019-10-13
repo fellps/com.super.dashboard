@@ -15,7 +15,9 @@ import CNPJInput from '../../components/inputs/cnpj'
 
 import {
   Row,
-  Col
+  Col,
+  ButtonToolbar,
+  ButtonGroup
 } from 'react-bootstrap'
 
 import useMount from '../../helpers/useMount'
@@ -62,6 +64,8 @@ export default function ProducersSave ({ history, match }) {
     return clearProducer
   })
 
+  const screenType = match.path === '/producers/:uuid' ? 'edit' : 'view'
+
   const submit = async () => {
     const { address } = producer
 
@@ -89,7 +93,15 @@ export default function ProducersSave ({ history, match }) {
         onSubmit={submit}
       >
         {(connect, submit) => (
-          <Dashboard title='Produtora'>
+          <Dashboard
+            title={screenType === 'edit' ? 'Editar Produtora' : 'Nova Produtora'}
+            header={
+              <ButtonToolbar className='justify-content-between'>
+                <ButtonGroup>
+                  <Button variant='secondary' to={`/producers`}>←&nbsp;&nbsp;Voltar</Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            }>
             <form onSubmit={e => {
               e.preventDefault()
               submit()

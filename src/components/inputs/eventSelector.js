@@ -10,9 +10,9 @@ import { validateValueOrRequired } from './text'
 const loadOptions = mem(async () => {
   const { data } = await get()
 
-  return data.data.items.map(d => ({
-    value: d.uuid,
-    name: d.nome
+  return data.data.map(d => ({
+    value: d._id,
+    name: d.name
   }))
 })
 

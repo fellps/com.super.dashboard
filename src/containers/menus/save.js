@@ -9,7 +9,9 @@ import Alert from '../../components/alert'
 
 import {
   Row,
-  Col
+  Col,
+  ButtonToolbar,
+  ButtonGroup
 } from 'react-bootstrap'
 
 import {
@@ -94,12 +96,19 @@ export default function MenuSave ({ history, match }) {
   }
 
   const rmProduct = async ({ uuid, localId }) => {
-    // @TODO: REMOVE PRODUCT
-    await removeProduct({ uuid, localId })
+    removeProduct({ uuid, localId })
   }
 
   return (
-    <Dashboard title={screenType === 'edit' ? 'Editar Cardápio' : 'Novo Cardápio'}>
+    <Dashboard
+      title={screenType === 'edit' ? 'Editar Cardápio' : 'Novo Cardápio'}
+      header={
+        <ButtonToolbar className='justify-content-between'>
+          <ButtonGroup>
+            <Button variant='secondary' to={`/events/${match.params.uuid}/menus`}>←&nbsp;&nbsp;Voltar</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+      }>
       <Alert variant='danger' show={response.status === 'error'}>
         {response.message}
       </Alert>

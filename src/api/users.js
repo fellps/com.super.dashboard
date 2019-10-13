@@ -1,20 +1,17 @@
 import request, { loggedUser } from './index'
+import qs from 'qs'
 
 export const get = async ({ uuid: userId, ...restParams } = {}) => {
-  const { uuid, token } = loggedUser()
-  return request.get(`/usuarios/${uuid}/usuarios/${userId || ''}`, {
+  const { _id, token } = loggedUser()
+  return request.get(`/users/${_id}`, {
     params: restParams,
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { 'x-access-token': token }
   })
 }
 
 export const save = async ({ uuid: userId, ...restData }) => {
-  const { uuid, token } = loggedUser()
-  return request.put(`/usuarios/${uuid}/usuarios/${userId}`, restData, {
-    headers: { Authorization: `Bearer ${token}` }
+  const { _id, token } = loggedUser()
+  return request.put(`/users/${_id}`, qs.stringify(restData), {
+    headers: { 'x-access-token': token }
   })
-}
-
-export const getAddress = async () => {
-
 }

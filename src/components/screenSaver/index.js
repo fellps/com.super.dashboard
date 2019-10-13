@@ -8,10 +8,10 @@ export default function ScreenSaver ({ children, footer }) {
       <div className='main-content' style={{ minHeight: '100vh' }}>
         <Navbar bg='transparent' variant='dark' expand='md' className='navbar-top navbar-horizontal'>
           <Container className='px-4'>
-            <h1 className='text-white' style={{ fontSize: 25 }}>⌬ super</h1>
+            <img alt='logo' src={require('../../assets/logo.png')} width='250px' />
           </Container>
         </Navbar>
-        <div className='header bg-gradient-indigo py-7 py-lg-8'>
+        <div className='header bg-gradient-red py-7 py-lg-8'>
           <div className='container'>
             <div className='header-body text-center mb-7'>
               <div className='row justify-content-center'>

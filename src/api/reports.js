@@ -1,9 +1,9 @@
 import request, { loggedUser } from './index'
 
-export const totals = async ({ uuid: userId, ...restParams } = {}) => {
-  const { uuid, token } = loggedUser()
-  return request.get(`/usuarios/${uuid}/transacoes/consolidacoes`, {
+export const salesSummary = async ({ uuid: eventId, ...restParams } = {}) => {
+  const { token } = loggedUser()
+  return request.get(`/reports/financial/sales-summary/${eventId}`, {
     params: restParams,
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { 'x-access-token': token }
   })
 }

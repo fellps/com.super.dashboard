@@ -67,20 +67,23 @@ export default function Dashboard ({ title, header, children }) {
       <div className='main-content'>
         <Navbar variant='dark' expand='lg' className='navbar-top'>
           <Container fluid>
+            <Link className='h4 mb-0 text-white text-uppercase d-none d-lg-inline-block' to='#/'>
+              {title}
+            </Link>
             <Nav as='ul' className='navbar-nav align-items-center mr-3 d-none d-md-flex ml-lg-auto'>
               <NavDropdown
                 className='user-info'
-                title={<User name={loggedUser.nome} />}
+                title={<User name={loggedUser.name} />}
                 id='dd-user'
               >
-                <NavDropdown.Item to={`/users/${loggedUser.uuid}`} as={Link}>Meu Perfil</NavDropdown.Item>
+                <NavDropdown.Item to={`/users/${loggedUser._id}`} as={Link}>Meu Perfil</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={logout}>Sair</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Container>
         </Navbar>
-        <div className='header bg-gradient-indigo pb-8 pt-5 pt-md-8'>
+        <div className='header bg-gradient-red pb-8 pt-5 pt-md-8'>
           <Container fluid>
             <div className='header-body'>
               {header}

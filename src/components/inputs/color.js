@@ -81,7 +81,7 @@ class Color extends React.Component {
     })
 
     return (
-      <div>
+      <React.Fragment>
         <div style={styles.swatch} onClick={this.handleClick}>
           <div style={styles.color} />
         </div>
@@ -89,7 +89,7 @@ class Color extends React.Component {
           <div style={styles.cover} onClick={this.handleClose} />
           <SketchPicker color={this.state.color} onChange={e => this.handleChange(e, onChangeText)} />
         </div> : null }
-      </div>
+      </React.Fragment>
     )
   }
 }

@@ -21,7 +21,7 @@ export default function NavBar () {
       <Container fluid>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Brand className='pt-0' href='#home'>
-          ⌬ super
+          <img alt='logo' src={require('../../assets/logo-black.png')} />
         </Navbar.Brand>
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav as='ul'>

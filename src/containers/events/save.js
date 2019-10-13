@@ -10,7 +10,8 @@ import Alert from '../../components/alert'
 import {
   Row,
   Col,
-  ButtonToolbar
+  ButtonToolbar,
+  ButtonGroup
 } from 'react-bootstrap'
 
 import {
@@ -85,6 +86,7 @@ export default function EventSave ({ history, match }) {
     const { address } = event
 
     await save({
+      _id: event._id,
       name: event.name,
       cep: String(address.cep).replace(/[^0-9]/gi, ''),
       state: address.state,
@@ -94,7 +96,8 @@ export default function EventSave ({ history, match }) {
       description: event.description,
       startDate: moment.utc(event.startDate + ' ' + event.startTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       endDate: moment.utc(event.endDate + ' ' + event.endTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
-      producerId: event.producerId
+      producerId: event.producerId,
+      isEnabled: event.isEnabled
     })
 
     history.push('/home')
@@ -104,15 +107,18 @@ export default function EventSave ({ history, match }) {
     <Dashboard
       title={screenType === 'edit' ? 'Editar Evento' : 'Novo Evento'}
       header={
-        <ButtonToolbar
-          className='justify-content-end'
-        >
-          <Button icon='fat-add' to={`/events/${event._id}/menus`}>
-            Cardápios
-          </Button>
-          <Button icon='fat-add' to={`/events/${event._id}/pos`}>
-            Pontos de Venda
-          </Button>
+        <ButtonToolbar className='justify-content-between'>
+          <ButtonGroup>
+            <Button variant='secondary' to={`/events`}>←&nbsp;&nbsp;Voltar</Button>
+          </ButtonGroup>
+          <div>
+            <Button icon='fat-add' to={`/events/${event._id}/menus`} style={{ marginright: 15 }}>
+              Cardápios
+            </Button>
+            <Button icon='fat-add' to={`/events/${event._id}/pos`}>
+              Pontos de Venda
+            </Button>
+          </div>
         </ButtonToolbar>
       }>
       <Alert variant='danger' show={response.status === 'error'}>

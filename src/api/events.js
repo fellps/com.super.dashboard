@@ -1,5 +1,4 @@
 import request, { loggedUser } from './index'
-
 import qs from 'qs'
 
 export const get = async ({ uuid: eventId, ...restParams } = {}) => {

@@ -1,7 +1,7 @@
 
 import { createReducer } from 'redux-act'
 
-import { get, getOne, clearUser, set, save, getTransactions } from './actions'
+import { get, getOne, clearUser, set, save } from './actions'
 
 import {
   fulfilled,
@@ -27,11 +27,6 @@ export default createReducer({
   [fulfilled(get)]: (state, payload) => ({
     ...state,
     users: payload.data
-  }),
-
-  [fulfilled(getTransactions)]: (state, payload) => ({
-    ...state,
-    transactions: payload.data.data.items
   }),
 
   [fulfilled(getOne)]: (state, payload) => {
