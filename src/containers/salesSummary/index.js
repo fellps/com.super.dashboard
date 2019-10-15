@@ -121,7 +121,8 @@ export default function Sales ({ history, match }) {
               <thead className='thead-light'>
                 <tr>
                   <th scope='col'>Formas de pagamento</th>
-                  <th scope='col'>Quantidade</th>
+                  <th scope='col'>Valor total</th>
+                  <th scope='col'>Total operações</th>
                   <th scope='col'>Porcentagem total das vendas</th>
                 </tr>
               </thead>
@@ -129,6 +130,7 @@ export default function Sales ({ history, match }) {
                 {!isEmpty(salesSummary) && salesSummary.paymentMethod.map(paymentMethod => (
                   <tr key={paymentMethod.id}>
                     <th scope='row'>{paymentMethod.paymentMethod}</th>
+                    <td>R$ {parseFloat(paymentMethod.totalAmount).toLocaleString('pt-BR')}</td>
                     <td>{paymentMethod.count}</td>
                     <td>
                       <div className='d-flex align-items-center'>
@@ -156,7 +158,7 @@ export default function Sales ({ history, match }) {
                   <th scope='col'>Produto</th>
                   <th scope='col'>Quantidade</th>
                   <th scope='col'>Valor total</th>
-                  <th scope='col'>Representação do valor total</th>
+                  <th scope='col'>Representação do valor total vendido</th>
                 </tr>
               </thead>
               <tbody>

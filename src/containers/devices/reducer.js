@@ -5,7 +5,8 @@ import {
   get,
   getOne,
   save,
-  clearDevice
+  clearDevice,
+  setShowQRCode
 } from './actions'
 
 import { fulfilled, pending, rejected } from '../../helpers/reducerPromiseHelper'
@@ -19,6 +20,10 @@ const initialState = {
   device: {},
   response: {
     status: null
+  },
+  showQRCode: {
+    show: false,
+    id: null
   }
 }
 
@@ -32,6 +37,14 @@ export default createReducer({
       }
     }
   },
+
+  [setShowQRCode]: (state, payload) => ({
+    ...state,
+    showQRCode: {
+      ...state.showQRCode,
+      ...payload
+    }
+  }),
 
   [fulfilled(get)]: (state, payload) => ({
     ...state,
@@ -62,5 +75,11 @@ export default createReducer({
   [rejected(save)]: (state, payload) => ({
     ...state,
     response: payload.response.data
+  }),
+
+  [clearDevice]: state => ({
+    ...state,
+    device: { ...initialState.device },
+    response: { ...initialState.response }
   })
 }, { ...initialState })

@@ -89,7 +89,8 @@ export default function MenuSave ({ history, match }) {
       name: menu.name,
       isEnabled: menu.isEnabled,
       products: menu.products,
-      menuId: match.params.uuidMenu
+      menuId: match.params.uuidMenu,
+      eventId: match.params.uuid
     })
 
     history.push('/events/' + match.params.uuid + '/menus')

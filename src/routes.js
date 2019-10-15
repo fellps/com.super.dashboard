@@ -15,6 +15,7 @@ import SaveMenu from './containers/menus/save'
 import Producers from './containers/producers'
 import ProducersSave from './containers/producers/save'
 
+import Devices from './containers/devices'
 import DevicesSave from './containers/devices/save'
 
 import Transactions from './containers/transactions'
@@ -39,14 +40,15 @@ export const routes = [
   { path: '/events/:uuid/menus', exact: true, component: Menus },
   { path: '/events/:uuid/menus/create', exact: true, component: SaveMenu },
   { path: '/events/:uuid/menus/:uuidMenu', exact: true, component: SaveMenu },
+  { path: '/events/:uuid/pos', exact: true, component: Devices },
   { path: '/events/:uuid/pos/create', exact: true, component: DevicesSave },
   { path: '/events/:uuid/pos/:uuidDevice', exact: true, component: DevicesSave },
   { path: '/users/:uuid', exact: true, component: UsersView },
   { path: '/users', name: 'Usuários', icon: 'circle-08 text-pink', exact: true, menu: true, component: Users },
-  { path: '/transactions', name: 'Transações', icon: 'shop text-orange', exact: true, menu: true, component: Transactions },
-  { path: '/sales', name: 'Vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: Sales },
-  { path: '/reports/sales-summary', name: 'Vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: SalesSummary },
-  { path: '/compare', name: 'Comparar Eventos', icon: 'scissors text-info', exact: true, menu: true, component: CompareEvents },
+  // { path: '/transactions', name: 'Transações', icon: 'shop text-orange', exact: true, menu: true, component: Transactions },
+  // { path: '/sales', name: 'Vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: Sales },
+  { path: '/reports/sales-summary', name: 'Resumo de vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: SalesSummary },
+  // { path: '/compare', name: 'Comparar Eventos', icon: 'scissors text-info', exact: true, menu: true, component: CompareEvents },
   { path: '/producers/create', exact: true, component: ProducersSave },
   { path: '/producers/:uuid', exact: true, component: ProducersSave },
   { path: '/login', exact: true, component: Login },

@@ -10,7 +10,8 @@ import Filters from '../filters'
 import toParams from '../filters/toParams'
 
 import {
-  ButtonToolbar
+  ButtonToolbar,
+  ButtonGroup
 } from 'react-bootstrap'
 
 import { get, clearMenu } from './actions'
@@ -72,12 +73,15 @@ export default function Events ({ history, match }) {
     <Dashboard
       title='Cardápios'
       header={
-        <ButtonToolbar
-          className='justify-content-end'
-        >
-          <Button icon='fat-add' to={`/events/${match.params.uuid}/menus/create`}>
-            Criar Novo
-          </Button>
+        <ButtonToolbar className='justify-content-between'>
+          <ButtonGroup>
+            <Button variant='secondary' to={`/events`}>←&nbsp;&nbsp;Voltar</Button>
+          </ButtonGroup>
+          <div>
+            <Button icon='fat-add' to={`/events/${match.params.uuid}/menus/create`}>
+              Criar Novo
+            </Button>
+          </div>
         </ButtonToolbar>
       }
     >
