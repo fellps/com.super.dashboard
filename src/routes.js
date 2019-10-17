@@ -27,6 +27,8 @@ import UsersView from './containers/users/view'
 import Sales from './containers/sales'
 import SalesSummary from './containers/salesSummary'
 
+import OrdersDelivered from './containers/ordersDelivered'
+
 import CompareEvents from './containers/compareEvents'
 
 export const routes = [
@@ -48,6 +50,7 @@ export const routes = [
   // { path: '/transactions', name: 'Transações', icon: 'shop text-orange', exact: true, menu: true, component: Transactions },
   // { path: '/sales', name: 'Vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: Sales },
   { path: '/reports/sales-summary', name: 'Resumo de vendas', icon: 'chart-bar-32 text-red', exact: true, menu: true, component: SalesSummary },
+  { path: '/reports/summary-of-orders-delivered', name: 'Resumo de entregas', icon: 'delivery-fast text-red', exact: true, menu: true, component: OrdersDelivered },
   // { path: '/compare', name: 'Comparar Eventos', icon: 'scissors text-info', exact: true, menu: true, component: CompareEvents },
   { path: '/producers/create', exact: true, component: ProducersSave },
   { path: '/producers/:uuid', exact: true, component: ProducersSave },

@@ -7,3 +7,11 @@ export const salesSummary = async ({ uuid: eventId, ...restParams } = {}) => {
     headers: { 'x-access-token': token }
   })
 }
+
+export const ordersDelivered = async ({ uuid: eventId, ...restParams } = {}) => {
+  const { token } = loggedUser()
+  return request.get(`/reports/producer/orders-delivered/${eventId}`, {
+    params: restParams,
+    headers: { 'x-access-token': token }
+  })
+}
