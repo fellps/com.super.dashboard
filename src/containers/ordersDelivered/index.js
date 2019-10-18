@@ -14,11 +14,11 @@ import isEmpty from 'lodash/isEmpty'
 
 function useStateAndDispatch () {
   const dispatch = useDispatch()
-  const salesSummary = useSelector(state => state.salesSummary.salesSummary)
+  const ordersDelivered = useSelector(state => state.ordersDelivered.ordersDelivered)
   const isLoadingOrdersDelivered = useSelector(state => state.isLoading[getOrdersDelivered])
 
   return {
-    salesSummary,
+    ordersDelivered,
     isLoadingOrdersDelivered,
     getOrdersDelivered: params => dispatch(getOrdersDelivered(params))
   }
@@ -26,7 +26,7 @@ function useStateAndDispatch () {
 
 export default function OrdersDelivered ({ history, match }) {
   const {
-    salesSummary,
+    ordersDelivered,
     getOrdersDelivered,
     isLoadingOrdersDelivered
   } = useStateAndDispatch()
@@ -54,7 +54,7 @@ export default function OrdersDelivered ({ history, match }) {
         />
       }
     >
-      <Row style={{ marginTop: 50, display: isEmpty(salesSummary) ? 'none' : 'flex' }}>
+      <Row style={{ marginTop: 50, display: isEmpty(ordersDelivered) ? 'none' : 'flex' }}>
         <Col lg='6' xl='4'>
           <Card className='card-stats mb-4 mb-xl-0'>
             <Row>
@@ -63,7 +63,7 @@ export default function OrdersDelivered ({ history, match }) {
                   Total vendido
                 </h5>
                 <span className='h2 font-weight-bold mb-0'>
-                  R$ {parseFloat(salesSummary.totalEventAmount).toLocaleString('pt-BR')}
+                  R$ {parseFloat(ordersDelivered.totalDeliveredAmount).toLocaleString('pt-BR')}
                 </span>
               </div>
               <Col className='col-auto'>
@@ -79,15 +79,15 @@ export default function OrdersDelivered ({ history, match }) {
             <Row>
               <div className='col'>
                 <h5 className='text-uppercase text-muted mb-0'>
-                    Total transações
+                  Total pedidos entregues
                 </h5>
                 <span className='h2 font-weight-bold mb-0'>
-                  {salesSummary.totalTransactions}
+                  {parseFloat(ordersDelivered.totalOrdersDelivered).toLocaleString('pt-BR')}
                 </span>
               </div>
               <Col className='col-auto'>
-                <div className='icon icon-shape bg-info text-white rounded-circle shadow'>
-                  <i className='fas fa-chart-bar' />
+                <div className='icon icon-shape bg-danger text-white rounded-circle shadow'>
+                  <i className='fas fa-truck-loading' />
                 </div>
               </Col>
             </Row>
@@ -98,15 +98,15 @@ export default function OrdersDelivered ({ history, match }) {
             <Row>
               <div className='col'>
                 <h5 className='text-uppercase text-muted mb-0'>
-                    Total de pontos de venda
+                    Total entregadores
                 </h5>
                 <span className='h2 font-weight-bold mb-0'>
-                  {salesSummary.totalPOS}
+                  {ordersDelivered.totalDeliverers}
                 </span>
               </div>
               <Col className='col-auto'>
-                <div className='icon icon-shape bg-danger text-white rounded-circle shadow'>
-                  <i className='fas fa-store' />
+                <div className='icon icon-shape bg-info text-white rounded-circle shadow'>
+                  <i className='fas fa-user-friends' />
                 </div>
               </Col>
             </Row>
@@ -115,34 +115,21 @@ export default function OrdersDelivered ({ history, match }) {
       </Row>
       <Row>
         <Col sm={12} style={{ marginTop: 30 }}>
-          <Card isLoading={isLoadingOrdersDelivered} shadow header={<h3 className='mb-0'>Estatísticas de pagamentos</h3>}>
-            <Table className='align-items-center table-flush' responsive style={{ display: isEmpty(salesSummary) ? 'none' : 'table' }}>
+          <Card isLoading={isLoadingOrdersDelivered} shadow header={<h3 className='mb-0'>Resumo de produtos entregues</h3>}>
+            <Table className='align-items-center table-flush' responsive style={{ display: isEmpty(ordersDelivered) ? 'none' : 'table' }}>
               <thead className='thead-light'>
                 <tr>
-                  <th scope='col'>Formas de pagamento</th>
+                  <th scope='col'>Produto</th>
+                  <th scope='col'>Quantidade</th>
                   <th scope='col'>Valor total</th>
-                  <th scope='col'>Total operações</th>
-                  <th scope='col'>Porcentagem total das vendas</th>
                 </tr>
               </thead>
               <tbody>
-                {!isEmpty(salesSummary) && salesSummary.paymentMethod.map(paymentMethod => (
-                  <tr key={paymentMethod.id}>
-                    <th scope='row'>{paymentMethod.paymentMethod}</th>
-                    <td>R$ {parseFloat(paymentMethod.totalAmount).toLocaleString('pt-BR')}</td>
-                    <td>{paymentMethod.count}</td>
-                    <td>
-                      <div className='d-flex align-items-center'>
-                        <span className='mr-2'>{paymentMethod.percent}%</span>
-                        <div>
-                          <ProgressBar
-                            max='100'
-                            now={paymentMethod.percent}
-                            variant='success'
-                          />
-                        </div>
-                      </div>
-                    </td>
+                {!isEmpty(ordersDelivered) && ordersDelivered.products.map(product => (
+                  <tr key={product.id}>
+                    <th scope='row'>{product.name}</th>
+                    <td>{product.totalCount}</td>
+                    <td>R$ {parseFloat(product.totalAmount).toLocaleString('pt-BR')}</td>
                   </tr>
                 ))}
               </tbody>
@@ -150,34 +137,23 @@ export default function OrdersDelivered ({ history, match }) {
           </Card>
         </Col>
         <Col sm={12} style={{ marginTop: 30 }}>
-          <Card isLoading={isLoadingOrdersDelivered} shadow header={<h3 className='mb-0'>Resumo de produtos</h3>}>
-            <Table className='align-items-center table-flush' responsive style={{ display: isEmpty(salesSummary) ? 'none' : 'table' }}>
+          <Card isLoading={isLoadingOrdersDelivered} shadow header={<h3 className='mb-0'>Resumo por entregador</h3>}>
+            <Table className='align-items-center table-flush' responsive style={{ display: isEmpty(ordersDelivered) ? 'none' : 'table' }}>
               <thead className='thead-light'>
                 <tr>
+                  <th scope='col'>CPF</th>
                   <th scope='col'>Produto</th>
                   <th scope='col'>Quantidade</th>
                   <th scope='col'>Valor total</th>
-                  <th scope='col'>Representação do valor total vendido</th>
                 </tr>
               </thead>
               <tbody>
-                {!isEmpty(salesSummary) && salesSummary.productSummary.map(product => (
-                  <tr key={product.id}>
-                    <th scope='row'>{product.name}</th>
-                    <td>{product.totalCount}</td>
-                    <td>R$ {parseFloat(product.totalAmount).toLocaleString('pt-BR')}</td>
-                    <td>
-                      <div className='d-flex align-items-center'>
-                        <span className='mr-2'>{product.percent}%</span>
-                        <div>
-                          <ProgressBar
-                            max='100'
-                            now={product.percent}
-                            variant='success'
-                          />
-                        </div>
-                      </div>
-                    </td>
+                {!isEmpty(ordersDelivered) && ordersDelivered.ordersDeliveredByUser.map(order => (
+                  <tr key={order.productId}>
+                    <th scope='row'>{order.cpf}</th>
+                    <td>{order.name}</td>
+                    <td>{order.totalCount}</td>
+                    <td>R$ {parseFloat(order.totalAmount).toLocaleString('pt-BR')}</td>
                   </tr>
                 ))}
               </tbody>

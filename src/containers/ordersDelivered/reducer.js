@@ -3,21 +3,21 @@ import { createReducer } from 'redux-act'
 import { fulfilled, rejected } from '../../helpers/reducerPromiseHelper'
 
 import {
-  getSalesSummary
+  getOrdersDelivered
 } from './actions'
 
 const initialState = {
-  salesSummary: {}
+  ordersDelivered: {}
 }
 
 export default createReducer({
-  [fulfilled(getSalesSummary)]: (state, payload) => ({
+  [fulfilled(getOrdersDelivered)]: (state, payload) => ({
     ...state,
-    salesSummary: payload.data.data
+    ordersDelivered: payload.data.data
   }),
 
-  [rejected(getSalesSummary)]: (state, payload) => ({
+  [rejected(getOrdersDelivered)]: (state, payload) => ({
     ...state,
-    salesSummary: { ...initialState.salesSummary }
-  }),
+    ordersDelivered: { ...initialState.ordersDelivered }
+  })
 }, { ...initialState })

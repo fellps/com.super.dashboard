@@ -8,6 +8,7 @@ import filters from '../containers/filters/reducer'
 import transactions from '../containers/transactions/reducer'
 import sales from '../containers/sales/reducer'
 import salesSummary from '../containers/salesSummary/reducer'
+import ordersDelivered from '../containers/ordersDelivered/reducer'
 import producers from '../containers/producers/reducer'
 import compare from '../containers/compareEvents/reducer'
 import balance from '../containers/balance/reducer'
@@ -25,6 +26,7 @@ export default combineReducers({
   filters,
   sales,
   salesSummary,
+  ordersDelivered,
   producers,
   compare,
   balance,
