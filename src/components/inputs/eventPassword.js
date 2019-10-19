@@ -6,7 +6,8 @@ export default createInput({
   handleProps: props => ({
     placeholder: 'Sua senha...',
     error: 'A senha precisa possuir pelo menos 6 caracteres.',
-    type: 'password',
+    type: 'tel',
+    mask: '999999999999',
     ...props
   }),
   validate: validateValueOrRequired(value => String(value || '').length >= 6),

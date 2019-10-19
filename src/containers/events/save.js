@@ -30,6 +30,7 @@ import useMount from '../../helpers/useMount'
 import Button from '../../components/button'
 
 import InputText from '../../components/inputs/text'
+import InputEventPassword from '../../components/inputs/eventPassword'
 import SwitchInput from '../../components/inputs/switch'
 import InputWysiwyg from '../../components/inputs/wysiwyg'
 import InputDate from '../../components/inputs/date'
@@ -97,6 +98,7 @@ export default function EventSave ({ history, match }) {
       startDate: moment.utc(event.startDate + ' ' + event.startTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       endDate: moment.utc(event.endDate + ' ' + event.endTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       producerId: event.producerId,
+      managerPassword: event.managerPassword,
       isEnabled: event.isEnabled
     })
 
@@ -165,6 +167,8 @@ export default function EventSave ({ history, match }) {
                     </Col>
                     <Col sm={12} md={5}><InputHour {...connect('endTime')} label='Hora Fim' required /></Col>
                   </Row>
+                  <hr />
+                  <InputEventPassword {...connect('managerPassword')} label='Senha de gestor do evento' required />
                   <hr />
                   <InputAddress {...connect('address')} />
                   <InputWysiwyg {...connect('description')} label='Descrição' required />

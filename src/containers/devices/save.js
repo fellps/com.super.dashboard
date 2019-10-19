@@ -18,7 +18,8 @@ import {
   set,
   save,
   clearDevice,
-  getOne
+  getOne,
+  getAcquirers
 } from './actions'
 
 import {
@@ -32,6 +33,7 @@ import Button from '../../components/button'
 import InputText from '../../components/inputs/text'
 import SwitchInput from '../../components/inputs/switch'
 import MultiSelect from '../../components/multiSelect'
+import SelectInput from '../../components/inputs/select'
 
 import Form from 'react-nonconformist'
 
@@ -40,18 +42,21 @@ function useStateAndDispatch () {
   const device = useSelector(state => state.devices.device)
   const menus = useSelector(state => state.menus.menus)
   const response = useSelector(state => state.devices.response)
+  const acquirers = useSelector(state => state.devices.acquirers)
   const isLoading = useSelector(state => state.isLoading[save])
 
   return {
     device,
     menus,
     response,
+    acquirers,
     isLoading,
     save: params => dispatch(save(params)),
     set: params => dispatch(set(params)),
     clearDevice: () => dispatch(clearDevice()),
     getOne: params => dispatch(getOne(params)),
-    getMenus: params => dispatch(getMenus(params))
+    getMenus: params => dispatch(getMenus(params)),
+    getAcquirers: params => dispatch(getAcquirers(params))
   }
 }
 
@@ -60,11 +65,13 @@ export default function EventSave ({ history, match }) {
     device,
     menus,
     response,
+    acquirers,
     isLoading,
     save,
     set,
     getOne,
-    getMenus
+    getMenus,
+    getAcquirers
   } = useStateAndDispatch()
 
   const screenType = match.path === '/events/:uuid/pos/:uuidDevice' ? 'edit' : 'view'
@@ -74,6 +81,7 @@ export default function EventSave ({ history, match }) {
       getOne({ uuidDevice: match.params.uuidDevice })
     }
     getMenus({ uuid: match.params.uuid })
+    getAcquirers()
   })
 
   const submit = async () => {
@@ -82,7 +90,9 @@ export default function EventSave ({ history, match }) {
       eventId: match.params.uuid,
       name: device.name,
       menusIds: device.menusIds,
-      isEnabled: device.isEnabled
+      acquirer: device.acquirer,
+      isEnabled: device.isEnabled,
+      isQRCodeEnabled: device.isQRCodeEnabled
     })
 
     history.push('/events/' + match.params.uuid + '/pos')
@@ -94,7 +104,7 @@ export default function EventSave ({ history, match }) {
       header={
         <ButtonToolbar className='justify-content-between'>
           <ButtonGroup>
-            <Button variant='secondary' to={`/events/${device._id}/pos`}>←&nbsp;&nbsp;Voltar</Button>
+            <Button variant='secondary' to={`/events/${match.params.uuid}/pos`}>←&nbsp;&nbsp;Voltar</Button>
           </ButtonGroup>
         </ButtonToolbar>
       }>
@@ -118,6 +128,14 @@ export default function EventSave ({ history, match }) {
               <Row>
                 <Col sm={12} md={12}>
                   {screenType === 'edit' && <SwitchInput {...connect('isEnabled')} label='Status do PDV' />}
+                  <SwitchInput {...connect('isQRCodeEnabled')} label='Imprimir QRCode' />
+                  <SelectInput
+                    {...connect('acquirer')}
+                    label={'Adquirente'}
+                    value={device.acquirer}
+                    options={acquirers}
+                    required
+                  />
                   <InputText {...connect('name')} label='Nome do PDV' required />
                   <MultiSelect {...connect('menusIds')}
                     items={menus.data}

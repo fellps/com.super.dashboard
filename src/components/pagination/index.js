@@ -45,7 +45,7 @@ export default function Pagination ({
 
   const pagination = paginate(activePage, lastPage)
 
-  console.log(itemsCountPerPage, totalItemsCount, lastPage, pagination)
+  // console.log(itemsCountPerPage, totalItemsCount, lastPage, pagination)
 
   pagination.pop()
   pagination.shift()

@@ -4,6 +4,7 @@ import {
   set,
   get,
   getOne,
+  getAcquirers,
   save,
   clearDevice,
   setShowQRCode
@@ -24,7 +25,8 @@ const initialState = {
   showQRCode: {
     show: false,
     id: null
-  }
+  },
+  acquirers: []
 }
 
 export default createReducer({
@@ -57,6 +59,11 @@ export default createReducer({
       ...state.device,
       ...payload.data.data
     }
+  }),
+
+  [fulfilled(getAcquirers)]: (state, payload) => ({
+    ...state,
+    acquirers: payload.data.data.map(d => ({ name: d.name, value: d.value, id: d.value }))
   }),
 
   [fulfilled(save)]: (state, payload) => ({

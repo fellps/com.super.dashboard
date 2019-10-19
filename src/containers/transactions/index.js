@@ -60,7 +60,7 @@ export default function Transactions ({ history }) {
 
   const paginate = page => {
     const query = toParams({ ...qs.parse(window.location.search, { ignoreQueryPrefix: true }), page })
-    console.log(query)
+    // console.log(query)
     get(query)
   }
 
