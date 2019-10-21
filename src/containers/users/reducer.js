@@ -35,10 +35,7 @@ export default createReducer({
     return {
       ...state,
       user: {
-        ...user,
-        nascimento: user.nascimento
-          ? moment(user.nascimento, 'YYYY-MM-DD').format('DD/MM/YYYY')
-          : void (0)
+        ...user
       }
     }
   },

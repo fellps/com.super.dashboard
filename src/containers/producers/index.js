@@ -94,7 +94,7 @@ export default function Producers ({ history }) {
         onFilter={filter}
         filters={[
           { name: 'socialReason', input: 'TextInput', label: 'Razão Social' },
-          { name: 'cnpj', input: 'TextInput', label: 'CNPJ' }
+          { name: 'CNPJ', input: 'CNPJ', label: 'CNPJ' }
         ]}
       >
         <Table

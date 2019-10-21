@@ -2,16 +2,24 @@ import request, { loggedUser } from './index'
 import qs from 'qs'
 
 export const get = async ({ uuid: userId, ...restParams } = {}) => {
-  const { _id, token } = loggedUser()
-  return request.get(`/users/${_id}`, {
+  const { token } = loggedUser()
+  return request.get(`/users/`, {
     params: restParams,
     headers: { 'x-access-token': token }
   })
 }
 
-export const save = async ({ uuid: userId, ...restData }) => {
-  const { _id, token } = loggedUser()
-  return request.put(`/users/${_id}`, qs.stringify(restData), {
+export const getOne = async ({ _id: userId, ...restParams } = {}) => {
+  const { token } = loggedUser()
+  return request.get(`/users/${userId}`, {
+    params: restParams,
+    headers: { 'x-access-token': token }
+  })
+}
+
+export const save = async ({ _id: userId, ...restData }) => {
+  const { token } = loggedUser()
+  return request.put(`/users/${userId}`, qs.stringify(restData), {
     headers: { 'x-access-token': token }
   })
 }

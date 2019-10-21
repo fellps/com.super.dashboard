@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-act'
 
-import { set } from './actions'
+import { set, clearFilter } from './actions'
 
 const initialState = { }
 
@@ -10,5 +10,9 @@ export default createReducer({
       ...state,
       ...payload
     })
+  },
+
+  [clearFilter]: (state, payload) => {
+    return ({})
   }
 }, { ...initialState })

@@ -1,10 +1,9 @@
 import request, { loggedUser } from './index'
-
 import qs from 'qs'
 
 export const get = async ({ uuid: eventId, ...restParams } = {}) => {
   const { token } = loggedUser()
-  return request.get(`/menus/${eventId || ''}/list`, {
+  return request.get(`/menus/${eventId || ''}/list/`, {
     params: restParams,
     headers: { 'x-access-token': token }
   })

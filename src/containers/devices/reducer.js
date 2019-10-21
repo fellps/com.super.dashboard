@@ -53,6 +53,11 @@ export default createReducer({
     devices: payload.data
   }),
 
+  [rejected(get)]: (state, payload) => ({
+    ...state,
+    devices: payload.response.data
+  }),
+
   [fulfilled(getOne)]: (state, payload) => ({
     ...state,
     device: {

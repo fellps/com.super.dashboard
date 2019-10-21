@@ -13,43 +13,38 @@ import { get } from './actions'
 import Button from '../../components/button'
 import Table from '../../components/table'
 
-import { toCPF, toDDMMYYYY } from '../../helpers/formatter'
-
 const columns = [
   {
-    dataIndex: 'nome',
-    key: 'nome',
+    dataIndex: 'name',
+    key: 'name',
     title: 'Nome'
   },
   {
-    dataIndex: 'cpf',
-    key: 'cpf',
-    title: 'CPF',
-    render: toCPF
+    dataIndex: 'isEnabled',
+    key: 'isEnabled',
+    title: 'Status'
   },
   {
-    dataIndex: 'sexo',
-    key: 'sexo',
-    title: 'Sexo',
-    render: s => s === 'm' ? 'Masculino' : s === 'f' ? 'Feminino' : '-'
+    dataIndex: 'email',
+    key: 'email',
+    title: 'Email'
   },
   {
-    dataIndex: 'nascimento',
-    key: 'nascimento',
-    title: 'Data de Nascimento',
-    render: date => date ? toDDMMYYYY(date) : '-'
+    dataIndex: 'phone',
+    key: 'phone',
+    title: 'Telefone'
   },
   {
     dataIndex: 'actions',
     key: 'actions',
     title: 'Ações',
-    render: (history, { uuid }) => (
+    render: (history, { _id }) => (
       <React.Fragment>
         <Button
-          to={`/users/${uuid}`}
+          to={`/users/${_id}`}
           size='sm'
-          variant='info'
-        >Ver</Button>
+          variant='success'
+        >Editar</Button>
       </React.Fragment>
     )
   }
@@ -86,14 +81,14 @@ export default function Users ({ history }) {
         history={history}
         onFilter={filter}
         filters={[
-          { name: 'nome', input: 'TextInput', label: 'Nome' },
+          { name: 'name', input: 'TextInput', label: 'Nome' },
           { name: 'CPF', label: 'CPF', placeholder: '' }
         ]}
         title='Usuários'
       >
         <Table
           columns={columns}
-          data={users.data.items.map(d => ({
+          data={users && users.data && users.data.length > 0 && users.data.map(d => ({
             ...d,
             actions: history
           }))}

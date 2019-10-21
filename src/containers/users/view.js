@@ -24,8 +24,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getOne, clearUser, set, save } from './actions'
 
-import moment from 'moment'
-
 function useStateAndDispatch () {
   const dispatch = useDispatch()
   const user = useSelector(state => state.users.user)
@@ -37,7 +35,7 @@ function useStateAndDispatch () {
     user,
     response,
     transactions,
-    get: params => dispatch(getOne(params)),
+    getOne: params => dispatch(getOne(params)),
     set: params => dispatch(set(params)),
     save: params => dispatch(save(params)),
     clearUser: () => dispatch(clearUser()),
@@ -49,7 +47,7 @@ export default function UserView ({ history, match }) {
   const {
     user,
     response,
-    get,
+    getOne,
     save,
     set,
     clearUser,
@@ -57,7 +55,7 @@ export default function UserView ({ history, match }) {
   } = useStateAndDispatch()
 
   useMount(() => {
-    get({ uuid: match.params.uuid })
+    getOne({ _id: match.params.uuid })
     return clearUser
   })
 

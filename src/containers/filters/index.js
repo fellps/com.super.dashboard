@@ -5,7 +5,7 @@ import Button from '../../components/button'
 
 import { Row, Col } from 'react-bootstrap'
 
-import { set } from './actions'
+import { set, clearFilter } from './actions'
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -26,7 +26,8 @@ function useStateAndDispatch () {
 
   return {
     filters,
-    set: params => dispatch(set(params))
+    set: params => dispatch(set(params)),
+    clearFilter: params => dispatch(clearFilter(params))
   }
 }
 
@@ -38,7 +39,7 @@ export default function Filter ({
   history,
   children
 }) {
-  const { filters: values, set } = useStateAndDispatch()
+  const { filters: values, set, clearFilter } = useStateAndDispatch()
 
   useMount(() => {
     const { search } = window.location
@@ -47,6 +48,8 @@ export default function Filter ({
       const parsed = qs.parse(search, { ignoreQueryPrefix: true })
       if (isEmpty(parsed) === false) set(parsed)
     }
+
+    clearFilter()
   })
 
   const onSubmit = () => {

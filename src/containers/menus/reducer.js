@@ -115,6 +115,11 @@ export default createReducer({
     menus: payload.data
   }),
 
+  [rejected(get)]: (state, payload) => ({
+    ...state,
+    menus: payload.response.data
+  }),
+
   [fulfilled(getOne)]: (state, payload) => ({
     ...state,
     menu: {

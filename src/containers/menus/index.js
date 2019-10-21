@@ -66,7 +66,7 @@ export default function Events ({ history, match }) {
   })
 
   const filter = params => {
-    get(toParams(match.params))
+    get(toParams({ ...match.params, ...params }))
   }
 
   return (
