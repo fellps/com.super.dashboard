@@ -5,7 +5,7 @@ import config from '../config'
 import cookies from 'js-cookie'
 
 export const loggedUser = () => {
-  const loggedUserCookie = cookies.get('loggedUser')
+  const loggedUserCookie = cookies.get('loggedUser') || '{}'
   return JSON.parse(loggedUserCookie)
 }
 

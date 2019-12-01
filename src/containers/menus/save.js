@@ -153,7 +153,6 @@ export default function MenuSave ({ history, match }) {
                     localId={key}
                     connect={connect}
                     removeProduct={() => rmProduct({ uuid: menu.products[key]._id, localId: key })}
-                    product={menu.products[key]}
                   />
                 ))}
               </Products>

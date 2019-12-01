@@ -11,7 +11,7 @@ import {
   Form
 } from 'react-bootstrap'
 
-import Cleave from 'cleave.js/react'
+import NumberFormat from 'react-number-format'
 
 import classname from 'classname'
 
@@ -39,6 +39,17 @@ export class CurrencyInputComponent extends Component {
     error: 'Valor inválido'
   }
 
+  currencyFormatter = (value) => {
+    if (!Number(value)) return ''
+
+    const amount = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(value / 100)
+
+    return `${amount}`
+  }
+
   _renderInputGroupOrFragment = input => {
     const { prepend } = this.props
     if (prepend) {
@@ -61,9 +72,6 @@ export class CurrencyInputComponent extends Component {
     const {
       value,
       error,
-      onBlur,
-      onFocus,
-      placeholder,
       label,
       info,
       required,
@@ -74,20 +82,17 @@ export class CurrencyInputComponent extends Component {
       <Form.Group>
         {label && <Form.Label>{label}{required && '*'}</Form.Label>}
         {this._renderInputGroupOrFragment(
-          <Cleave
-            placeholder={placeholder}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            value={value}
-            onChange={e => onChangeText(e.target.rawValue.replace('R$ ', ''))}
-            type='tel'
+          <NumberFormat
+            decimalScale={2}
+            decimalSeparator=','
+            fixedDecimalScale
+            onValueChange={e => onChangeText(parseFloat(e.floatValue) / 100)}
+            placeholder='R$ 0,00'
+            prefix='R$ '
+            thousandSeparator='.'
+            value={value * 100}
+            format={this.currencyFormatter}
             className={classname('form-control', { 'is-invalid': !!error })}
-            options={{
-              numeral: true,
-              numeralDecimalMark: ',',
-              delimiter: '.',
-              prefix: 'R$ '
-            }}
           />
         )}
         {info && <Form.Text className='text-muted'>{info}</Form.Text>}

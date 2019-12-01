@@ -6,7 +6,7 @@ import { CPF } from 'cpf_cnpj'
 
 export default createInput({
   handleProps: props => ({
-    placeholder: 'Seu CPF...',
+    placeholder: 'Número do CPF...',
     ...props,
     error: 'CPF Inválido',
     type: 'tel',

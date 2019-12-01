@@ -1,14 +1,17 @@
 import React from 'react'
 
-import Card from '../../components/card'
-import Dashboard from '../dashboard'
-import Filters from '../filters'
+import { Link } from 'react-router-dom'
 
 import { Row, Col, Table, ProgressBar } from 'react-bootstrap'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getSalesSummary } from './actions'
+import useMount from '../../helpers/useMount'
+import Card from '../../components/card'
+import Dashboard from '../dashboard'
+import Filters from '../filters'
+
+import { getSalesSummary, getSalesSummaryExternal } from './actions'
 
 import isEmpty from 'lodash/isEmpty'
 
@@ -20,15 +23,22 @@ function useStateAndDispatch () {
   return {
     salesSummary,
     isLoadingSalesSummary,
-    getSalesSummary: params => dispatch(getSalesSummary(params))
+    getSalesSummary: params => dispatch(getSalesSummary(params)),
+    getSalesSummaryExternal: params => dispatch(getSalesSummaryExternal(params))
     // clearMenu: () => dispatch(clearMenu())
   }
 }
 
 export default function Sales ({ history, match }) {
+  let hideMenu = false
+  if (match.url.includes('/external')) {
+    hideMenu = true
+  }
+
   const {
     salesSummary,
     getSalesSummary,
+    getSalesSummaryExternal,
     isLoadingSalesSummary
   } = useStateAndDispatch()
 
@@ -40,10 +50,17 @@ export default function Sales ({ history, match }) {
     getSalesSummary(mapper)
   }
 
+  useMount(() => {
+    if (match.url.includes('/external')) {
+      getSalesSummaryExternal({ uuid: match.params.uuid })
+    }
+  })
+
   return (
     <Dashboard
-      title='Resumo de vendas'
-      header={
+      title={salesSummary.eventName || 'Resumo de vendas'}
+      hideMenu={hideMenu}
+      header={!hideMenu &&
         <Filters
           isLoading={isLoadingSalesSummary}
           history={history}
@@ -51,10 +68,36 @@ export default function Sales ({ history, match }) {
           filters={[
             { name: 'Event' }
           ]}
-          title='Resumo de vendas'
+          title={salesSummary.eventName || 'Resumo de vendas'}
         />
       }
     >
+      {
+        !hideMenu &&
+        <Row style={{ marginTop: 50, display: isEmpty(salesSummary) ? 'none' : 'flex' }}>
+          <Col lg='12' xl='12'>
+            <Card className='card-stats mb-4 mb-xl-0'>
+              <Row>
+                <div className='col'>
+                  <h5 className='text-uppercase text-muted mb-0'>
+                    Link Externo
+                  </h5>
+                  <span className='h2 font-weight-bold mb-0'>
+                    <Link to={`/external/reports/sales-summary/${salesSummary.eventId}`} target='_blank' className='text-body'>
+                      <small><i className='fas fa-sign-out-alt' /> Clique aqui para ir ao link externo do evento</small>
+                    </Link>
+                  </span>
+                </div>
+                <Col className='col-auto'>
+                  <div className='icon icon-shape bg-success text-white rounded-circle shadow'>
+                    <i className='fas fa-sign-out-alt' />
+                  </div>
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      }
       <Row style={{ marginTop: 50, display: isEmpty(salesSummary) ? 'none' : 'flex' }}>
         <Col lg='6' xl='4'>
           <Card className='card-stats mb-4 mb-xl-0'>
