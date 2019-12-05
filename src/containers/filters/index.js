@@ -88,7 +88,7 @@ export default function Filter ({
             }}>
               <Row>
                 {filters.map(({ name, input, ...restFilter }) => (
-                  <Col md={6} key={`filter-${name}`}>
+                  <Col md={name === 'CashierCPF' ? 12 : 6} key={`filter-${name}`}>
                     {React.createElement(listFilters[input || name], {
                       ...restFilter,
                       ...connect(name)

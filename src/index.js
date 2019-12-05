@@ -14,6 +14,7 @@ import './theme/assets/scss/argon-dashboard.scss'
 import './style/input.css'
 import './style/card.css'
 import './style/nav.css'
+import './style/custom.css'
 import './style/ticket.scss'
 import '@kenshooui/react-multi-select/dist/style.css'
 // END IMPORT STYLES FROM THEME

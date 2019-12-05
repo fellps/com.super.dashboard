@@ -33,9 +33,9 @@ export default function Sales ({ history, match }) {
   } = useStateAndDispatch()
 
   const filter = filter => {
-    const cpf = filter.CPF && filter.CPF.replace(/[^0-9]/gi, '')
+    const cpf = filter.CashierCPF.cashier && filter.CashierCPF.cashier.replace(/[^0-9]/gi, '')
     const mapper = {
-      uuid: filter.Event || '',
+      uuid: filter.CashierCPF.event || '',
       cpf: cpf || ''
     }
 
@@ -51,8 +51,7 @@ export default function Sales ({ history, match }) {
           history={history}
           onFilter={filter}
           filters={[
-            { name: 'Event' },
-            { name: 'CPF', input: 'CPF', label: 'CPF do Caixa' }
+            { name: 'CashierCPF', input: 'CashierCPF', label: 'CPF do Caixa' }
           ]}
           title='Fechamento de caixa'
         />
@@ -64,20 +63,30 @@ export default function Sales ({ history, match }) {
             <Table className='align-items-center table-flush' responsive style={{ display: isEmpty(cashierClosing) ? 'none' : 'table' }}>
               <thead className='thead-light'>
                 <tr>
+                  <th scope='col'>Produto</th>
                   <th scope='col'>Formas de pagamento</th>
+                  <th scope='col'>Quantidade</th>
                   <th scope='col'>Valor total</th>
-                  <th scope='col'>Total operações</th>
                 </tr>
               </thead>
               <tbody>
-                {!isEmpty(cashierClosing) && cashierClosing.paymentMethodCanceled.map(paymentMethod => (
-                  <tr key={paymentMethod.id}>
-                    <th scope='row'>{paymentMethod.paymentMethod}</th>
-                    <td>R$ {parseFloat(paymentMethod.totalAmount).toLocaleString('pt-BR')}</td>
-                    <td>{paymentMethod.count}</td>
+                {!isEmpty(cashierClosing) && cashierClosing.productsCanceled.length > 0 && cashierClosing.productsCanceled.map(product => (
+                  <tr key={product.id}>
+                    <th scope='row'>{product.name}</th>
+                    <td>{product.paymentMethod}</td>
+                    <td>{product.totalCount}</td>
+                    <td>R$ {parseFloat(product.totalAmount).toLocaleString('pt-BR')}</td>
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td> </td>
+                  <td>{!isEmpty(cashierClosing) && cashierClosing.paymentMethodCanceled.count}</td>
+                  <td>R$ {!isEmpty(cashierClosing) && parseFloat(cashierClosing.paymentMethodCanceled.totalAmount).toLocaleString('pt-BR')}</td>
+                </tr>
+              </tfoot>
             </Table>
           </Card>
         </Col>
@@ -100,6 +109,13 @@ export default function Sales ({ history, match }) {
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td>R$ {!isEmpty(cashierClosing) && parseFloat(cashierClosing.paymentMethodTotal.totalAmount).toLocaleString('pt-BR')}</td>
+                  <td>{!isEmpty(cashierClosing) && cashierClosing.paymentMethodTotal.count}</td>
+                </tr>
+              </tfoot>
             </Table>
           </Card>
         </Col>

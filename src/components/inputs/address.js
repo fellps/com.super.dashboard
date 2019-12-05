@@ -117,6 +117,7 @@ class AdressBR extends Component {
           </Col>
           <Col>
             <TextInput
+              required
               ref={ref => (this._numberRef = ref)}
               onChangeText={addressNumber => onChangeText({ ...value, addressNumber })}
               value={value.addressNumber}
