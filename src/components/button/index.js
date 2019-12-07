@@ -14,6 +14,7 @@ export default function Button ({ children, to, isLoading, icon, className, vari
     variant={variant}
     {...(to && { as: Link, to })}
     className={`${className || ''} ${classname({ 'btn-icon': icon })}`}
+    disabled={isLoading}
   >
     {isLoading ? (
       <ReactLoading
@@ -21,6 +22,7 @@ export default function Button ({ children, to, isLoading, icon, className, vari
         color={String(variant).includes('outline') ? '#333' : '#fff'}
         height={20}
         width={20}
+        disabled
       />
     ) : icon ? (
       <React.Fragment>
