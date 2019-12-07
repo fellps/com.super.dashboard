@@ -69,17 +69,21 @@ export default function ProducersSave ({ history, match }) {
   const submit = async () => {
     const { address } = producer
 
+    const addressData = {
+      cep: address !== void (0) ? String(address.cep).replace(/[^0-9]/gi, '') : '',
+      state: address !== void (0) ? address.state : '',
+      city: address !== void (0) ? address.city : '',
+      address: address !== void (0) ? address.address : '',
+      addressNumber: address !== void (0) ? Number(address.addressNumber) : 0
+    }
+
     await save({
       _id: producer._id,
       socialReason: producer.socialReason,
       cnpj: String(producer.cnpj).replace(/[^0-9]/gi, ''),
-      cep: String(address.cep).replace(/[^0-9]/gi, ''),
-      state: address.state,
-      city: address.city,
-      address: address.address,
-      addressNumber: Number(address.addressNumber),
       email: producer.email,
-      phone: String(producer.phone).replace(/[^0-9]/gi, '')
+      phone: String(producer.phone).replace(/[^0-9]/gi, ''),
+      ...addressData
     })
 
     history.push('/producers')

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const getStates = async () => axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-export const getCities = async ({ id }) => axios.get(`http://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/microrregioes`)
+export const getCities = async ({ id }) => axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/microrregioes`)
 export const getAddressFromCep = async ({ cep }) => {
   if (cep.length < 8) throw new Error('SEND_A_VALID_CEP')
 

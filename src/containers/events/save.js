@@ -86,20 +86,24 @@ export default function EventSave ({ history, match }) {
   const submit = async () => {
     const { address } = event
 
+    const addressData = {
+      cep: address !== void (0) ? String(address.cep).replace(/[^0-9]/gi, '') : '',
+      state: address !== void (0) ? address.state : '',
+      city: address !== void (0) ? address.city : '',
+      address: address !== void (0) ? address.address : '',
+      addressNumber: address !== void (0) ? Number(address.addressNumber) : 0
+    }
+
     await save({
       _id: event._id,
       name: event.name,
-      cep: String(address.cep).replace(/[^0-9]/gi, ''),
-      state: address.state,
-      city: address.city,
-      address: address.address,
-      addressNumber: Number(address.addressNumber),
       description: event.description,
       startDate: moment.utc(event.startDate + ' ' + event.startTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       endDate: moment.utc(event.endDate + ' ' + event.endTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       producerId: event.producerId,
       managerPassword: event.managerPassword,
-      isEnabled: event.isEnabled
+      isEnabled: event.isEnabled,
+      ...addressData
     })
 
     history.push('/home')

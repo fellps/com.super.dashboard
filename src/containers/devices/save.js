@@ -92,7 +92,7 @@ export default function EventSave ({ history, match }) {
       menusIds: device.menusIds,
       acquirer: device.acquirer,
       isEnabled: device.isEnabled,
-      isQRCodeEnabled: device.isQRCodeEnabled
+      isQRCodeEnabled: device.isQRCodeEnabled !== void (0) ? device.isQRCodeEnabled : false
     })
 
     history.push('/events/' + match.params.uuid + '/pos')
