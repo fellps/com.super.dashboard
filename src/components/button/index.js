@@ -6,7 +6,7 @@ import { Link } from  'react-router-dom'
 
 import ReactLoading from 'react-loading'
 
-import classname from  'classname'
+import classname from 'classname'
 
 export default function Button ({ children, to, isLoading, icon, className, variant='dark', ...restProps }) {
   return <ButtonRB

@@ -77,6 +77,7 @@ export default function MenuSave ({ history, match }) {
 
   useMount(() => {
     if (screenType === 'edit') {
+      clearMenu()
       getOne({ uuidMenu: match.params.uuidMenu })
     } else {
       clearMenu()

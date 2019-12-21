@@ -43,17 +43,20 @@ const initialState = {
 }
 
 export default createReducer({
-  [addProduct]: state => ({
-    ...state,
-    menu: {
-      ...state.menu,
-      ...state.products,
-      products: {
-        ...state.menu.products,
-        [uuid()]: { }
+  [addProduct]: state => {
+    const newState = {
+      ...state,
+      menu: {
+        ...state.menu,
+        ...state.products,
+        products: {
+          ...state.menu.products,
+          [uuid()]: { }
+        }
       }
     }
-  }),
+    return newState
+  },
 
   [fulfilled(removeProduct)]: (state, { uuid, localId }) => ({
     ...state,
@@ -94,7 +97,7 @@ export default createReducer({
       }, {}))
     }
 
-    return {
+    const newstate = {
       ...state,
       menu: {
         ...state.menu,
@@ -102,11 +105,23 @@ export default createReducer({
         products
       }
     }
+
+    console.log(newstate)
+
+    return newstate
   },
 
   [clearMenu]: state => ({
     ...state,
-    menu: { ...initialState.menu },
+    products: { ...initialState.products },
+    menu: {
+      isEnabled: true,
+      products: {
+        [uuid()]: {}
+      }
+    },
+    menus: { ...initialState.menus },
+    edit: { ...initialState.edit },
     response: { ...initialState.response }
   }),
 
