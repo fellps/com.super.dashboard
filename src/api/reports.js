@@ -24,9 +24,9 @@ export const ordersDelivered = async ({ uuid: eventId, ...restParams } = {}) => 
   })
 }
 
-export const cashierClosing = async ({ uuid: eventId, cpf, ...restParams } = {}) => {
+export const cashierClosing = async ({ uuid: eventId, cpf, startAt, endAt, ...restParams } = {}) => {
   const { token } = loggedUser()
-  return request.get(`/reports/financial/cashier-closing/${eventId}/${cpf}`, {
+  return request.get(`/reports/financial/cashier-closing/${eventId}/${cpf}?startAt=${startAt}&endAt=${endAt}`, {
     params: restParams,
     headers: { 'x-access-token': token }
   })

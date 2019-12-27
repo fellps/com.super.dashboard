@@ -33,10 +33,18 @@ export default function Sales ({ history, match }) {
   } = useStateAndDispatch()
 
   const filter = filter => {
+    console.log(filter)
     const cpf = filter.CashierCPF.cashier && filter.CashierCPF.cashier.replace(/[^0-9]/gi, '')
+    const startAt = filter.StartAt || '01/01/2019'
+    const startAtHour = filter.StartAtHour || '00:00'
+    const endAt = filter.EndAt || '01/01/2099'
+    const endAtHour = filter.EndAtHour || '00:00'
+
     const mapper = {
       uuid: filter.CashierCPF.event || '',
-      cpf: cpf || ''
+      cpf: cpf || '',
+      startAt: startAt + ' ' + startAtHour,
+      endAt: endAt + ' ' + endAtHour
     }
 
     getCashierClosing(mapper)
@@ -51,7 +59,11 @@ export default function Sales ({ history, match }) {
           history={history}
           onFilter={filter}
           filters={[
-            { name: 'CashierCPF', input: 'CashierCPF', label: 'CPF do Caixa' }
+            { name: 'CashierCPF', input: 'CashierCPF', label: 'CPF do Caixa' },
+            { name: 'StartAt', input: 'Date', label: 'Início' },
+            { name: 'StartAtHour', input: 'Hour', label: 'Horário' },
+            { name: 'EndAt', input: 'Date', label: 'Fim' },
+            { name: 'EndAtHour', input: 'Hour', label: 'Horário' }
           ]}
           title='Fechamento de caixa'
         />

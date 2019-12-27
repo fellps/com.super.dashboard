@@ -48,7 +48,7 @@ export class DateInputComponent extends Component {
 
   static defaultProps = {
     format: 'DD/MM/YYYY',
-    placeholder: 'DD/MM/YYYY',
+    placeholder: 'DD/MM/AAAA',
     error: 'Selecione uma data',
     months: DATE_PICKER_LOCALIZATION.MONTHS,
     weekdaysLong: DATE_PICKER_LOCALIZATION.WEEKDAYS_LONG,
