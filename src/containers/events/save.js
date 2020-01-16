@@ -37,6 +37,7 @@ import InputDate from '../../components/inputs/date'
 import InputHour from '../../components/inputs/hour'
 import InputAddress from '../../components/inputs/address'
 import SelectInput from '../../components/inputs/select'
+import InputUpload from '../../components/inputs/upload'
 
 import Form from 'react-nonconformist'
 
@@ -98,6 +99,7 @@ export default function EventSave ({ history, match }) {
       _id: event._id,
       name: event.name,
       description: event.description,
+      image: event.image,
       startDate: moment.utc(event.startDate + ' ' + event.startTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       endDate: moment.utc(event.endDate + ' ' + event.endTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       producerId: event.producerId,
@@ -175,7 +177,14 @@ export default function EventSave ({ history, match }) {
                   <InputEventPassword {...connect('managerPassword')} label='Senha de gestor do evento' required />
                   <hr />
                   <InputAddress {...connect('address')} />
-                  <InputWysiwyg {...connect('description')} label='Descrição' required />
+                  <Row>
+                    <Col md={4} sm={12}>
+                      <InputUpload {...connect('image')} label='Imagem de impressão (414x161)' />
+                    </Col>
+                    <Col md={8} sm={12}>
+                      <InputWysiwyg {...connect('description')} label='Descrição' required />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Card>

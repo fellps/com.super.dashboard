@@ -67,7 +67,7 @@ export class TextInputComponent extends Component {
               cursor: 'pointer',
               textAlign: 'center',
               borderRadius: 4,
-              minHeight: 150,
+              minHeight: 200,
               border: '2px dashed rgba(0, 0, 0, 0.3)',
               display: 'flex',
               alignItems: 'center',
@@ -78,7 +78,7 @@ export class TextInputComponent extends Component {
             {value && (
               <div style={{ paddingLeft: 5 }}>
                 <img
-                  src={isFile(value) ? URL.createObjectURL(value) : value}
+                  src={isFile(value) ? URL.createObjectURL(value) : 'https://api-prd.bdbar.com.br' + value}
                   style={{
                     border: '1px solid rgba(0, 0, 0, 0.2)',
                     margin: 10,

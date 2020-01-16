@@ -1,5 +1,5 @@
 import request, { loggedUser } from './index'
-import qs from 'qs'
+import toFormData from '../helpers/toFormData'
 
 export const get = async ({ uuid: eventId, ...restParams } = {}) => {
   const { token } = loggedUser()
@@ -12,14 +12,22 @@ export const get = async ({ uuid: eventId, ...restParams } = {}) => {
 export const save = async ({ _id: eventId, ...restData }) => {
   const { token } = loggedUser()
 
+  const formData = toFormData(restData)
+
   if (eventId) {
-    return request.put(`/events/${eventId || ''}`, qs.stringify(restData), {
-      headers: { 'x-access-token': token }
+    return request.put(`/events/${eventId || ''}`, formData, {
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'multipart/form-data'
+      }
     })
   }
 
-  return request.post(`/events/${restData.producerId || ''}`, qs.stringify(restData), {
-    headers: { 'x-access-token': token }
+  return request.post(`/events/${restData.producerId || ''}`, formData, {
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'multipart/form-data'
+    }
   })
 }
 
