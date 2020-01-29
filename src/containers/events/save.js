@@ -179,7 +179,7 @@ export default function EventSave ({ history, match }) {
                   <InputAddress {...connect('address')} />
                   <Row>
                     <Col md={4} sm={12}>
-                      <InputUpload {...connect('image')} label='Imagem de impressão (414x161)' />
+                      <InputUpload {...connect('image')} label='Imagem de impressão (414x161) Formato: jpg' />
                     </Col>
                     <Col md={8} sm={12}>
                       <InputWysiwyg {...connect('description')} label='Descrição' required />

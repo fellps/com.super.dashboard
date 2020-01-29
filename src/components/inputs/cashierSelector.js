@@ -5,7 +5,7 @@ import { createInput } from 'react-nonconformist'
 import SelectInput from './select'
 
 import { get as getEvents } from '../../api/events'
-import { getCashiers } from '../../api/users'
+import { getCashiers, getPOS } from '../../api/users'
 
 import { Row, Col } from 'react-bootstrap'
 
@@ -37,8 +37,19 @@ class CashierCPF extends Component {
     } catch (err) {}
   }
 
+  _loadPOS = async cashier => {
+    try {
+      const { data } = await getPOS({ cashier })
+      this.setState({ pos: data.data.pos.map(d => ({ name: d, value: d, id: d })) })
+    } catch (err) {}
+  }
+
   onChange (e) {
     this._loadCashiers(e.event)
+  }
+
+  onChangeCashier (e) {
+    this._loadPOS(e.cashier)
   }
 
   render () {
@@ -49,7 +60,7 @@ class CashierCPF extends Component {
 
     return (
       <Row>
-        <Col sm={12} md={6}>
+        <Col sm={12} md={4}>
           <SelectInput
             label='Evento'
             onChangeText={event => {
@@ -61,13 +72,25 @@ class CashierCPF extends Component {
             options={this.state.events}
           />
         </Col>
-        <Col sm={12} md={6}>
+        <Col sm={12} md={4}>
           <SelectInput
             label='Caixa'
-            onChangeText={cashier => onChangeText({ ...value, cashier })}
+            onChangeText={cashier => {
+              this.onChangeCashier({ ...value, cashier })
+              onChangeText({ ...value, cashier })
+            }}
             value={value.cashier}
             disabled={this.state.isLoading}
             options={this.state.cashiers}
+          />
+        </Col>
+        <Col sm={12} md={4}>
+          <SelectInput
+            label='PDV'
+            onChangeText={pos => onChangeText({ ...value, pos })}
+            value={value.pos}
+            disabled={this.state.isLoading}
+            options={this.state.pos}
           />
         </Col>
       </Row>

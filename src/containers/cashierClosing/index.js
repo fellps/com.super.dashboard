@@ -39,12 +39,14 @@ export default function Sales ({ history, match }) {
     const startAtHour = filter.StartAtHour || '00:00'
     const endAt = filter.EndAt || '01/01/2099'
     const endAtHour = filter.EndAtHour || '00:00'
+    const terminalCode = filter.CashierCPF.pos
 
     const mapper = {
       uuid: filter.CashierCPF.event || '',
       cpf: cpf || '',
       startAt: startAt + ' ' + startAtHour,
-      endAt: endAt + ' ' + endAtHour
+      endAt: endAt + ' ' + endAtHour,
+      terminalCode: terminalCode || ''
     }
 
     getCashierClosing(mapper)
