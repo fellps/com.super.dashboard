@@ -43,8 +43,17 @@ export default function Sales ({ history, match }) {
   } = useStateAndDispatch()
 
   const filter = filter => {
+    const startAt = filter.StartAt || '01/01/2019'
+    const startAtHour = filter.StartAtHour || '00:00'
+    const endAt = filter.EndAt || '01/01/2099'
+    const endAtHour = filter.EndAtHour || '00:00'
+
     const mapper = {
-      uuid: filter.Event
+      uuid: (filter.CashierCPF && filter.CashierCPF.event) || match.params.uuid,
+      cpf: (filter.CashierCPF && filter.CashierCPF.cashier) || '',
+      terminalCode: (filter.CashierCPF && filter.CashierCPF.pos) || '',
+      startAt: startAt + ' ' + startAtHour,
+      endAt: endAt + ' ' + endAtHour
     }
 
     getSalesSummary(mapper)
@@ -60,13 +69,17 @@ export default function Sales ({ history, match }) {
     <Dashboard
       title={salesSummary.eventName || 'Resumo de vendas'}
       hideMenu={hideMenu}
-      header={!hideMenu &&
+      header={
         <Filters
           isLoading={isLoadingSalesSummary}
           history={history}
           onFilter={filter}
           filters={[
-            { name: 'Event' }
+            { name: 'CashierCPF', input: 'CashierCPF', label: 'CPF do Caixa', hideEvent: hideMenu, idEvent: match.params.uuid },
+            { name: 'StartAt', input: 'Date', label: 'Início' },
+            { name: 'StartAtHour', input: 'Hour', label: 'Horário' },
+            { name: 'EndAt', input: 'Date', label: 'Fim' },
+            { name: 'EndAtHour', input: 'Hour', label: 'Horário' }
           ]}
           title={salesSummary.eventName || 'Resumo de vendas'}
         />

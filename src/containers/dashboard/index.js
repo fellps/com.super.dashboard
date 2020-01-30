@@ -69,12 +69,12 @@ export default function Dashboard ({ title, header, children, hideMenu }) {
       <div className='main-content'>
         <Navbar variant='dark' expand='lg' className='navbar-top'>
           <Container fluid>
-            <Link className='h4 mb-0 text-white text-uppercase d-none d-lg-inline-block' to='#/'>
+            <Link className='h4 mb-0 text-white text-uppercase d-lg-inline-block margin-left-15' to='#/'>
               {title}
             </Link>
             {
               !hideMenu &&
-              <Nav as='ul' className='navbar-nav align-items-center mr-3 d-none d-md-flex ml-lg-auto'>
+              <Nav as='ul' className='navbar-nav align-items-center mr-3 d-md-flex ml-lg-auto margin-left-15'>
                 <NavDropdown
                   className='user-info'
                   title={<User name={loggedUser.name} />}

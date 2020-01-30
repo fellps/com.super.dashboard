@@ -18,8 +18,11 @@ class CashierCPF extends Component {
     cashiers: []
   }
 
-  componentDidMount () {
-    this._loadEvents()
+  componentDidMount = async () => {
+    if (!this.props.hideEvent) {
+      await this._loadEvents()
+    }
+    await this._loadCashiers(this.props.idEvent)
   }
 
   _loadEvents = async () => {
@@ -31,10 +34,18 @@ class CashierCPF extends Component {
 
   _loadCashiers = async event => {
     try {
-      const { id } = find(this.state.events, { value: event })
+      let id = null
+      const e = find(this.state.events, { value: event })
+      if (e !== void (0)) {
+        id = e.id
+      } else {
+        id = event
+      }
       const { data } = await getCashiers({ uuid: id })
       this.setState({ cashiers: data.data.cashiers.map(d => ({ name: d, value: d, id: d })) })
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   _loadPOS = async cashier => {
@@ -55,11 +66,13 @@ class CashierCPF extends Component {
   render () {
     const {
       onChangeText,
-      value = {}
+      value = {},
+      hideEvent
     } = this.props
 
     return (
       <Row>
+        { !hideEvent &&
         <Col sm={12} md={4}>
           <SelectInput
             label='Evento'
@@ -72,7 +85,8 @@ class CashierCPF extends Component {
             options={this.state.events}
           />
         </Col>
-        <Col sm={12} md={4}>
+        }
+        <Col sm={12} md={!hideEvent ? 4 : 6}>
           <SelectInput
             label='Caixa'
             onChangeText={cashier => {
@@ -84,7 +98,7 @@ class CashierCPF extends Component {
             options={this.state.cashiers}
           />
         </Col>
-        <Col sm={12} md={4}>
+        <Col sm={12} md={!hideEvent ? 4 : 6}>
           <SelectInput
             label='PDV'
             onChangeText={pos => onChangeText({ ...value, pos })}

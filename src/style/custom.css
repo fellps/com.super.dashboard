@@ -2,3 +2,9 @@ tfoot {
   background-color: #f6f9fc;
   font-weight: bold;
 }
+
+@media (max-width: 575.98px) {
+  .margin-left-15 {
+    margin-left: 15px;
+  }
+}

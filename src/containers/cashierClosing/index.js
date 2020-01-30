@@ -33,7 +33,6 @@ export default function Sales ({ history, match }) {
   } = useStateAndDispatch()
 
   const filter = filter => {
-    console.log(filter)
     const cpf = filter.CashierCPF.cashier && filter.CashierCPF.cashier.replace(/[^0-9]/gi, '')
     const startAt = filter.StartAt || '01/01/2019'
     const startAtHour = filter.StartAtHour || '00:00'
