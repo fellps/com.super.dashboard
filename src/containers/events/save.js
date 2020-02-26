@@ -104,6 +104,7 @@ export default function EventSave ({ history, match }) {
       endDate: moment.utc(event.endDate + ' ' + event.endTime, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm:ssZ'),
       producerId: event.producerId,
       managerPassword: event.managerPassword,
+      cashierClosingPassword: event.cashierClosingPassword,
       isEnabled: event.isEnabled,
       ...addressData
     })
@@ -173,9 +174,6 @@ export default function EventSave ({ history, match }) {
                     </Col>
                     <Col sm={12} md={5}><InputHour {...connect('endTime')} label='Hora Fim' required /></Col>
                   </Row>
-                  <hr />
-                  <InputEventPassword {...connect('managerPassword')} label='Senha de gestor do evento' required />
-                  <hr />
                   <InputAddress {...connect('address')} />
                   <Row>
                     <Col md={4} sm={12}>
@@ -185,6 +183,18 @@ export default function EventSave ({ history, match }) {
                       <InputWysiwyg {...connect('description')} label='Descrição' required />
                     </Col>
                   </Row>
+                  <hr />
+                  <Row>
+                    <Col md={3}>
+                      <InputEventPassword {...connect('managerPassword')} label='Senha de gestor do evento' placeholder='Senha de gestor do evento' required />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={3}>
+                      <InputEventPassword {...connect('cashierClosingPassword')} label='Senha de fechamento de caixa' placeholder='Senha de fechamento de caixa' required />
+                    </Col>
+                  </Row>
+                  <hr />
                 </Col>
               </Row>
             </Card>

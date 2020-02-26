@@ -24,6 +24,13 @@ export const save = async ({ _id: userId, ...restData }) => {
   })
 }
 
+export const create = async ({ ...restData }) => {
+  const { token } = loggedUser()
+  return request.post(`/users/`, qs.stringify(restData), {
+    headers: { 'x-access-token': token }
+  })
+}
+
 export const getCashiers = async ({ uuid: eventId, ...restParams } = {}) => {
   const { token } = loggedUser()
   return request.get(`/users/cashiers/${eventId || ''}`, {

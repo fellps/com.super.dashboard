@@ -24,6 +24,7 @@ function Login ({ data, set, login, isLoading, response, history }) {
     const { value: { data: loggedUser } } = await login(data)
     cookie.set('loggedUser', JSON.stringify(loggedUser.data))
     history.push('/home')
+    window.location.reload()
   }
 
   return (

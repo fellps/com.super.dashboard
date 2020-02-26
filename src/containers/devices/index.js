@@ -123,7 +123,7 @@ export default function Events ({ history, match }) {
           }}
         />
       </Filters>
-      <Modal show={showQRCode.show} onHide={handleClose}>
+      <Modal show={showQRCode.show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>QRCode</Modal.Title>
         </Modal.Header>

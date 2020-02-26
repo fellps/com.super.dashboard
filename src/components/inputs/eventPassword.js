@@ -7,7 +7,7 @@ export default createInput({
     placeholder: 'Sua senha...',
     error: 'A senha precisa possuir pelo menos 6 caracteres.',
     type: 'tel',
-    mask: '999999999999',
+    mask: '999999',
     ...props
   }),
   validate: validateValueOrRequired(value => String(value || '').length >= 6),

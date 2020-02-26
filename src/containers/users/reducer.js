@@ -9,14 +9,14 @@ import {
   rejected
 } from '../../helpers/reducerPromiseHelper'
 
-import moment from 'moment'
-
 const initialState = {
   users: {
     data: { items: [] }
   },
 
-  user: {},
+  user: {
+    isEnabled: true
+  },
 
   transactions: [],
 

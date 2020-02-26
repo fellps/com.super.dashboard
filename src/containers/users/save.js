@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Dashboard from '../dashboard'
 
@@ -13,53 +13,48 @@ import PhoneInput from '../../components/inputs/phone'
 import SwitchInput from '../../components/inputs/switch'
 import CPFInput from '../../components/inputs/cpf'
 import PasswordInput from '../../components/inputs/password'
+import DateInput from '../../components/inputs/date'
 
 import {
   Row,
-  Col,
-  Modal
+  Col
 } from 'react-bootstrap'
 
 import useMount from '../../helpers/useMount'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getOne, clearUser, set, save } from './actions'
+import { clearUser, set, create } from './actions'
 
 function useStateAndDispatch () {
   const dispatch = useDispatch()
   const user = useSelector(state => state.users.user)
   const response = useSelector(state => state.users.response)
   const transactions = useSelector(state => state.users.transactions)
-  const isLoading = useSelector(state => state.isLoading[getOne])
+  const isLoading = useSelector(state => state.isLoading[create])
 
   return {
     user,
     response,
     transactions,
-    getOne: params => dispatch(getOne(params)),
     set: params => dispatch(set(params)),
-    save: params => dispatch(save(params)),
+    create: params => dispatch(create(params)),
     clearUser: () => dispatch(clearUser()),
     isLoading
   }
 }
 
 export default function UserView ({ history, match }) {
-  const [showSuccess, setShowSuccess] = useState(0)
-
   const {
     user,
     response,
-    getOne,
-    save,
+    create,
     set,
     clearUser,
     isLoading
   } = useStateAndDispatch()
 
   useMount(() => {
-    getOne({ _id: match.params.uuid })
     return clearUser
   })
 
@@ -70,21 +65,19 @@ export default function UserView ({ history, match }) {
       cpf: String(user.cpf).replace(/[^0-9]/gi, ''),
       phone: String(user.phone).replace(/[^0-9]/gi, '')
     }
-    await save(data)
-    setShowSuccess(true)
+    await create(data)
+    history.push('/users')
   }
 
-  const handleClose = () => setShowSuccess(false)
-
   return (
-    <Dashboard title='Ver Usuário'>
+    <Dashboard title='Novo Usuário'>
       <Row>
         <Col
           md={12} sm={12}
         >
           <Card
             isLoading={isLoading}
-            header={<h3 className='mb-0'>Perfil</h3>}
+            header={<h3 className='mb-0'>Cadastrar Usuário</h3>}
             shadow
           >
             <Alert variant='danger' show={response.status === 'error'}>
@@ -104,11 +97,11 @@ export default function UserView ({ history, match }) {
                   submit()
                 }}>
                   <SwitchInput {...connect('isEnabled')} label='Ativo' />
-                  <TextInput {...connect('name')} label='Nome Completo' required />
-                  <CPFInput {...connect('cpf')} label='CPF' disabled required />
+                  <TextInput {...connect('name')} label='Nome completo' required />
+                  <CPFInput {...connect('cpf')} label='CPF' required />
                   <TextInput {...connect('email')} label='Email' required />
                   <PhoneInput {...connect('phone')} />
-                  <PasswordInput {...connect('password')} label='Redefinir senha' />
+                  <PasswordInput {...connect('password')} label='Senha' />
                   <hr />
                   <div style={{ textAlign: 'right' }}>
                     <Button type='submit'>Salvar</Button>
@@ -119,19 +112,6 @@ export default function UserView ({ history, match }) {
           </Card>
         </Col>
       </Row>
-      <Modal show={showSuccess} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Atualização realizada</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Atualização realizada com sucesso!
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='success' onClick={handleClose}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Dashboard>
   )
 }
