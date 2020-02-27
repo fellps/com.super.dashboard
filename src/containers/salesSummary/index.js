@@ -238,6 +238,14 @@ export default function Sales ({ history, match }) {
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td>{salesSummary.totalProducts}</td>
+                  <td>R$ {parseFloat(salesSummary.totalEventAmount).toLocaleString('pt-BR')}</td>
+                  <td> </td>
+                </tr>
+              </tfoot>
             </Table>
           </Card>
         </Col>
