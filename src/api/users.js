@@ -39,9 +39,9 @@ export const getCashiers = async ({ uuid: eventId, ...restParams } = {}) => {
   })
 }
 
-export const getPOS = async ({ cashier, ...restParams } = {}) => {
+export const getPOS = async ({ eventId, cashier, ...restParams } = {}) => {
   const { token } = loggedUser()
-  return request.get(`/users/pos/${cashier || ''}`, {
+  return request.get(`/users/pos/${eventId}/${cashier || ''}`, {
     params: restParams,
     headers: { 'x-access-token': token }
   })

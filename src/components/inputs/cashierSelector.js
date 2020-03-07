@@ -50,7 +50,8 @@ class CashierCPF extends Component {
 
   _loadPOS = async cashier => {
     try {
-      const { data } = await getPOS({ cashier })
+      const eventId = this.props.value.event
+      const { data } = await getPOS({ eventId, cashier })
       this.setState({ pos: data.data.pos.map(d => ({ name: d, value: d, id: d })) })
     } catch (err) {}
   }
