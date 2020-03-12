@@ -61,7 +61,8 @@ export let routes = [
 const admin = [
   '5e053028d868f9076283513a', // Fellipe
   '5df3c4e254391a4877e20491', // Henrique
-  '5e3b17c880826b03d7361cd7' // Alex
+  '5e3b17c880826b03d7361cd7', // Alex
+  '5e6a2e9487b0bc76a08595e8' // Borges
 ]
 
 const data = loggedUser()
