@@ -63,8 +63,12 @@ const Row = ({ passedKey, toggle, visible, row, data, columns }) => {
             value = value ? 'Ativo' : 'Desativado'
           }
 
-          if (value != null && value.length >= 8 && Date.parse(value)) {
+          if (value != null && value.length === 24 && Date.parse(value)) {
             value = moment.utc(value).format('DD/MM/YYYY HH:mm')
+          }
+
+          if (value === 'null') {
+            value = ''
           }
 
           return (
