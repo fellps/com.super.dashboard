@@ -8,7 +8,7 @@ import ReactLoading from 'react-loading'
 
 import classname from 'classname'
 
-export default function Button ({ children, to, isLoading, icon, className, variant='dark', ...restProps }) {
+export default function Button ({ children, to, isLoading, icon, className, variant = 'dark', ...restProps }) {
   return <ButtonRB
     {...restProps}
     variant={variant}

@@ -5,7 +5,9 @@ import {
   get,
   getOne,
   save,
-  clearEvent
+  clone,
+  clearEvent,
+  setShowCloneEvent
 } from './actions'
 
 import moment from 'moment'
@@ -23,6 +25,11 @@ const initialState = {
     isEnabled: false
   },
 
+  showCloneEvent: {
+    show: false,
+    id: null
+  },
+
   response: { status: null }
 }
 
@@ -31,6 +38,14 @@ export default createReducer({
     ...state,
     event: { ...initialState.event },
     response: { ...initialState.response }
+  }),
+
+  [setShowCloneEvent]: (state, payload) => ({
+    ...state,
+    showCloneEvent: {
+      ...state.showCloneEvent,
+      ...payload
+    }
   }),
 
   [fulfilled(getOne)]: (state, payload) => ({
@@ -71,6 +86,24 @@ export default createReducer({
   }),
 
   [rejected(save)]: (state, payload) => ({
+    ...state,
+    response: payload.response.data
+  }),
+
+  [fulfilled(clone)]: (state, payload) => ({
+    ...state,
+    event: {
+      ...state.event,
+      ...payload.data.data
+    }
+  }),
+
+  [pending(clone)]: state => ({
+    ...state,
+    response: { ...state.response, status: 'pending' }
+  }),
+
+  [rejected(clone)]: (state, payload) => ({
     ...state,
     response: payload.response.data
   }),

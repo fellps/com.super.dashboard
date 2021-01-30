@@ -31,6 +31,19 @@ export const save = async ({ _id: eventId, ...restData }) => {
   })
 }
 
+export const clone = async ({ id: eventId, ...restData }) => {
+  const { token } = loggedUser()
+
+  const formData = toFormData(restData)
+
+  return request.post(`/events/clone/${eventId || ''}`, formData, {
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export const types = async params => {
   const { uuid, token } = loggedUser()
   return request.get(`/usuarios/${uuid}/eventos-tipo`, {

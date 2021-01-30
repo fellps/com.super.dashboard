@@ -24,7 +24,8 @@ const initialState = {
   },
   showQRCode: {
     show: false,
-    id: null
+    id: null,
+    eventName: null
   },
   acquirers: []
 }
